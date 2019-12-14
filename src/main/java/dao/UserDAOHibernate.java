@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.DBConnect;
-import util.DBConnectHibernate;
 
 import java.sql.SQLException;
 import java.util.List;

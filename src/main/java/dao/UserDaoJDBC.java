@@ -2,7 +2,6 @@ package dao;
 
 import model.User;
 import util.DBConnect;
-import util.DBConnectJDBC;
 
 import java.sql.*;
 import java.util.ArrayList;
