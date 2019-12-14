@@ -23,7 +23,8 @@
         <dd><input type="number" name="age" value="${user.age}"></dd>
     </dl>
     <button type="submit">Сохранить</button>
-    <button onclick="window.history.back()">Отмена</button>
+    <input type="button" onclick="history.back();" value="Назад"/>
+
 </form>
 </body>
 </html>

@@ -1,21 +1,20 @@
 package service;
 
+import dao.UserDAOHibernate;
 import dao.UserDao;
 import dao.UserDaoJDBC;
 import model.User;
-import util.DBConnect;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
 
     private static UserService instance;
-    private final Connection connection;
+    private final UserDao userDao;
 
     private UserService() {
-        connection = DBConnect.getMysqlConnection();
+        userDao = new UserDAOHibernate();
     }
 
     public static UserService getInstance() {
@@ -30,18 +29,16 @@ public class UserService {
     }
 
     public void create(User user) {
-        UserDao dao = new UserDaoJDBC(connection);
         try {
-            dao.create(user);
+            userDao.create(user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public User getUserById(long id) {
-        UserDao dao = new UserDaoJDBC(connection);
         try {
-            return dao.get(id);
+            return userDao.get(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,9 +46,8 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        UserDao dao = new UserDaoJDBC(connection);
         try {
-            return dao.getAll();
+            return userDao.getAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,18 +55,16 @@ public class UserService {
     }
 
     public void update(User user) {
-        UserDao dao = new UserDaoJDBC(connection);
         try {
-            dao.update(user);
+            userDao.update(user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void delete(long id) {
-        UserDao dao = new UserDaoJDBC(connection);
         try {
-            dao.delete(id);
+            userDao.delete(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

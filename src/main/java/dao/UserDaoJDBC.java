@@ -1,6 +1,7 @@
 package dao;
 
 import model.User;
+import util.DBConnectJDBC;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,13 +10,13 @@ import java.util.List;
 public class UserDaoJDBC implements UserDao {
     private Connection connection;
 
-    public UserDaoJDBC(Connection connection) {
-        this.connection = connection;
+    public UserDaoJDBC() {
+        this.connection = DBConnectJDBC.getMysqlConnection();
     }
 
     @Override
     public void create(User user) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO pp_1 (id , name, surname, age) VALUES (null, ?, ? , ?)");
+        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users (id , name, surname, age) VALUES (null, ?, ? , ?)");
         pstmt.setString(1, user.getName());
         pstmt.setString(2, user.getSurname());
         pstmt.setInt(3, user.getAge());
@@ -29,7 +30,7 @@ public class UserDaoJDBC implements UserDao {
     public List<User> getAll() throws SQLException {
         List<User> listUsers = new ArrayList<>();
         Statement stmt = connection.createStatement();
-        ResultSet result = stmt.executeQuery("SELECT * FROM pp_1");
+        ResultSet result = stmt.executeQuery("SELECT * FROM users");
 //        ResultSet result = stmt.getResultSet();
         while (result.next()) {
             User client = new User(result.getLong("id"),
@@ -45,7 +46,7 @@ public class UserDaoJDBC implements UserDao {
 
     @Override
     public User get(long id) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM pp_1 WHERE Id =?");
+        PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users WHERE Id =?");
         pstmt.setLong(1, id);
         ResultSet resultSet = pstmt.executeQuery();
 
@@ -58,7 +59,7 @@ public class UserDaoJDBC implements UserDao {
 
     @Override
     public void update(User user) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("UPDATE pp_1 SET name = ?, surname = ?, age =? WHERE Id =?");
+        PreparedStatement pstmt = connection.prepareStatement("UPDATE users SET name = ?, surname = ?, age =? WHERE Id =?");
         pstmt.setString(1, user.getName());
         pstmt.setString(2, user.getSurname());
         pstmt.setInt(3, user.getAge());
@@ -71,7 +72,7 @@ public class UserDaoJDBC implements UserDao {
 
     @Override
     public void delete(long id) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("DELETE FROM pp_1 WHERE Id =?");
+        PreparedStatement pstmt = connection.prepareStatement("DELETE FROM users WHERE Id =?");
         pstmt.setLong(1, id);
         int rowUpdated = pstmt.executeUpdate();
         if (rowUpdated > 0) {
@@ -80,6 +81,6 @@ public class UserDaoJDBC implements UserDao {
     }
 
     public void createTable() throws SQLException {
-        connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS pp_1 (Id BIGINT PRIMARY KEY AUTO_INCREMENT, name varchar(256), surname varchar(256), age int)");
+        connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users (Id BIGINT PRIMARY KEY AUTO_INCREMENT, name varchar(256), surname varchar(256), age int)");
     }
 }

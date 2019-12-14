@@ -1,17 +1,11 @@
 package util;
 
-import com.mysql.cj.xdevapi.SessionFactory;
-import model.User;
-import service.UserService;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnect {
-//    private static SessionFactory sessionFactory;
-
+public class DBConnectJDBC {
 
     public static Connection getMysqlConnection() {
         try {
@@ -36,18 +30,4 @@ public class DBConnect {
             throw new IllegalStateException();
         }
     }
-
-    public static void main(String[] args) {
-        UserService userService = UserService.getInstance();
-//        userService.create();
-        System.out.println(userService.getUserById(1));
-
-//        userService.update(new User(1L, "asd", "zxc", 25));
-//        userService.delete(2);
-//        userService.createTable();
-    }
-
-//    private static BankClientDAO getBankClientDAO() {
-//        return new BankClientDAO(getMysqlConnection());
-//    }
 }
