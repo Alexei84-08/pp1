@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.DBConnect;
 import util.DBConnectHibernate;
 
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public class UserDAOHibernate implements UserDao {
     private SessionFactory sessionFactory;
 
     public UserDAOHibernate() {
-        this.sessionFactory = DBConnectHibernate.getSessionFactory();
+        this.sessionFactory = DBConnect.getInstance().getConfiguration();
     }
 
     @Override

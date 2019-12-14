@@ -1,6 +1,7 @@
 package dao;
 
 import model.User;
+import util.DBConnect;
 import util.DBConnectJDBC;
 
 import java.sql.*;
@@ -11,8 +12,12 @@ public class UserDaoJDBC implements UserDao {
     private Connection connection;
 
     public UserDaoJDBC() {
-        this.connection = DBConnectJDBC.getMysqlConnection();
+        this.connection = DBConnect.getInstance().getConnection();
     }
+
+//    public UserDaoJDBC(Connection connection) {
+//        this.connection = connection;
+//    }
 
     @Override
     public void create(User user) throws SQLException {

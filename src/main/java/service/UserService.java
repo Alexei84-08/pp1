@@ -1,8 +1,7 @@
 package service;
 
-import dao.UserDAOHibernate;
 import dao.UserDao;
-import dao.UserDaoJDBC;
+import dao.UserDaoFactory;
 import model.User;
 
 import java.sql.SQLException;
@@ -14,7 +13,7 @@ public class UserService {
     private final UserDao userDao;
 
     private UserService() {
-        userDao = new UserDAOHibernate();
+        userDao = UserDaoFactory.create();
     }
 
     public static UserService getInstance() {
