@@ -26,9 +26,6 @@ public class UserServlet extends HttpServlet {
             User user = service.getUserById(Long.parseLong(req.getParameter("id")));
             req.setAttribute("user", user);
             req.getRequestDispatcher("/WEB-INF/jsp/userEdit.jsp").forward(req, resp);
-        } else if (action.equals("delete")) {
-            service.delete(Long.parseLong(req.getParameter("id")));
-            resp.sendRedirect("/");
         }
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
@@ -37,17 +34,43 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        String id = req.getParameter("id");
+        String action = req.getParameter("action");
+        String idStr = req.getParameter("id");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
-        Integer age = Integer.parseInt(req.getParameter("age"));
-        if (!name.isEmpty() && !surname.isEmpty() && age >= 0) {
-            if (id == null) {
-                service.create(new User(name, surname, age));
-            } else {
-                service.update(new User(Long.parseLong(id), name, surname, age));
-            }
+        String ageStr = req.getParameter("age");
+        int age = 0;
+        if (ageStr != null) {
+            age = Integer.parseInt(ageStr);
         }
+        long id = 0L;
+        if (idStr != null) {
+            id = Integer.parseInt(idStr);
+        }
+
+        switch (action) {
+            case "add":
+                if (isValidate(name, surname, age)) {
+                    service.create(new User(name, surname, age));
+                }
+                break;
+            case "update":
+                if (isValidate(name, surname, age)) {
+                    service.update(new User(id, name, surname, age));
+                }
+                break;
+            case "delete":
+                service.delete(id);
+                break;
+        }
+
         resp.sendRedirect("/");
+        resp.setContentType("text/html;charset=utf-8");
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
+
+    boolean isValidate(String s1, String s2, int i) {
+        return !s1.isEmpty() && !s2.isEmpty() && i >= 0;
+    }
+
 }

@@ -10,6 +10,7 @@
 <H2>Редактировать</H2>
 <form action="/" method="POST">
     <input type="hidden" name="id" value="${user.id}">
+    <input type="hidden" name="action" value="update">
     <dl>
         <dt>Имя</dt>
         <dd><input type="text" name="name" value="${user.name}"></dd>

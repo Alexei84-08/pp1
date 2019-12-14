@@ -23,8 +23,20 @@
             <td>${user.name}</td>
             <td>${user.surname}</td>
             <td>${user.age}</td>
-            <td><a href="/?action=update&id=${user.id}">Редактировать</a></td>
-            <td><a href="/?action=delete&id=${user.id}">Удалить</a></td>
+            <td>
+                <form action="/" method="GET">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="id" value="${user.id}">
+                    <input type="submit" value="Редактировать">
+                </form>
+            </td>
+            <td>
+                <form action="/" method="POST">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="id" value="${user.id}">
+                    <input type="submit" value="Удалить">
+                </form>
+            </td>
         </tr>
     </c:forEach>
 </table>
@@ -34,7 +46,8 @@
     Имя: <input type="text" name="name">
     Фамилия: <input type="text" name="surname">
     Возраст: <input type="number" name="age">
-    <input type="submit" value="Ok">
+    <input type="hidden" name="action" value="add">
+    <input type="submit" value="Добавить">
 </form>
 </body>
 </html>
