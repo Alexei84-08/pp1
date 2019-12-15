@@ -18,11 +18,11 @@ public class UserDaoFactory {
     }
 
     private static String getProperties() {
-        try {
-            String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
-            String appConfigPath = rootPath + "property.properties";
-            Properties appProps = new Properties();
-            appProps.load(new FileInputStream(appConfigPath));
+        String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
+        String appConfigPath = rootPath + "property.properties";
+        Properties appProps = new Properties();
+        try (FileReader reader = new FileReader(appConfigPath)){
+            appProps.load(reader);
             return appProps.getProperty("db.connect");
         } catch (IOException e) {
             e.printStackTrace();
