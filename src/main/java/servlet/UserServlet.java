@@ -32,7 +32,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
         String idStr = req.getParameter("id");
@@ -43,10 +43,6 @@ public class UserServlet extends HttpServlet {
         if (ageStr != null) {
             age = Integer.parseInt(ageStr);
         }
-        long id = 0L;
-        if (idStr != null) {
-            id = Integer.parseInt(idStr);
-        }
 
         switch (action) {
             case "add":
@@ -55,18 +51,47 @@ public class UserServlet extends HttpServlet {
                 }
                 break;
             case "update":
-                if (isValidate(name, surname, age)) {
-                    service.update(new User(id, name, surname, age));
-                }
+                doPut(req, resp);
                 break;
             case "delete":
-                service.delete(id);
+                doDelete(req, resp);
                 break;
         }
 
         resp.sendRedirect("/");
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        String idStr = req.getParameter("id");
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        String ageStr = req.getParameter("age");
+        int age = 0;
+        if (ageStr != null) {
+            age = Integer.parseInt(ageStr);
+                    }
+        long id = 0L;
+        if (idStr != null) {
+            id = Integer.parseInt(idStr);
+        }
+        if (isValidate(name, surname, age)) {
+            service.update(new User(id, name, surname, age));
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        String idStr = req.getParameter("id");
+        long id = 0L;
+        if (idStr != null) {
+            id = Integer.parseInt(idStr);
+            service.delete(id);
+        }
     }
 
     boolean isValidate(String s1, String s2, int i) {
