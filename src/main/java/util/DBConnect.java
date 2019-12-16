@@ -1,10 +1,7 @@
 package util;
 
 import model.User;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 import service.UserService;
 
 import java.sql.Connection;
@@ -50,11 +47,11 @@ public class DBConnect {
         }
     }
 
-    private Configuration getMySqlConfiguration() {
+    public Configuration getConfiguration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
 
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/pp_1?serverTimezone=UTC");
         configuration.setProperty("hibernate.connection.username", "asd");
@@ -63,13 +60,5 @@ public class DBConnect {
 //        configuration.setProperty("hibernate.hbm2ddl.auto", "create");
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         return configuration;
-    }
-
-    public SessionFactory getConfiguration() {
-        Configuration configuration = getMySqlConfiguration();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.applySettings(configuration.getProperties());
-        ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
     }
 }

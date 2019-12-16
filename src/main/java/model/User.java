@@ -19,6 +19,15 @@ public class User {
     @Column(name = "age")
     private Integer age;
 
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "password")
+    private String password;
+
     public User() {
     }
 
@@ -66,6 +75,30 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
