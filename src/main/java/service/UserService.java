@@ -44,6 +44,24 @@ public class UserService {
         return null;
     }
 
+    public String getRoleByLoginAndPassword(String login, String password) {
+        try {
+            return userDao.getRoleByLoginAndPassword(login, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean userIsExist(String login, String password) {
+        try {
+            return userDao.userIsExist(login, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public List<User> getAllUsers() {
         try {
             return userDao.getAll();

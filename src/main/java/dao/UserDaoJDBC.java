@@ -50,7 +50,7 @@ public class UserDaoJDBC implements UserDao {
 
     @Override
     public User get(long id) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users WHERE Id =?");
+        PreparedStatement pstmt = connection.prepareStatement("SELECT id, name, surname, age FROM users WHERE Id =?");
         pstmt.setLong(1, id);
         ResultSet resultSet = pstmt.executeQuery();
 
@@ -82,6 +82,26 @@ public class UserDaoJDBC implements UserDao {
         if (rowUpdated > 0) {
             System.out.println("Пользователь был успешно удален!");
         }
+    }
+
+    @Override
+    public String getRoleByLoginAndPassword(String login, String password) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement("SELECT role FROM users WHERE login =? AND password =?");
+        pstmt.setString(1, login);
+        pstmt.setString(2, password);
+        ResultSet resultSet = pstmt.executeQuery();
+        resultSet.next();
+        return resultSet.getString(1);
+    }
+
+    @Override
+    public boolean userIsExist(String login, String password) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement("SELECT login, password FROM users WHERE login =? AND password =?");
+        pstmt.setString(1, login);
+        pstmt.setString(2, password);
+        ResultSet resultSet = pstmt.executeQuery();
+        resultSet.next();
+        return resultSet.getString(1).equals(login) && resultSet.getString(2).equals(password);
     }
 
     public void createTable() throws SQLException {

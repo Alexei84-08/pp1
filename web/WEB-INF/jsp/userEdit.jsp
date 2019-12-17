@@ -1,6 +1,4 @@
-<jsp:useBean id="user" scope="request" type="model.User"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,7 +6,7 @@
 </head>
 <body>
 <H2>Редактировать</H2>
-<form action="/" method="POST">
+<form action="/admin" method="POST">
     <input type="hidden" name="id" value="${user.id}">
     <input type="hidden" name="action" value="update">
     <dl>

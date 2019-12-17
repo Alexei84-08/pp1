@@ -16,4 +16,7 @@ public interface UserDao {
 
     void delete(long id) throws SQLException;
 
+    String getRoleByLoginAndPassword(String login, String password) throws SQLException;
+
+    boolean userIsExist(String login, String password) throws SQLException;
 }

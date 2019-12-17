@@ -1,4 +1,4 @@
-package servlet;
+package servlets.servlet;
 
 import model.User;
 import service.UserService;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("")
-public class UserServlet extends HttpServlet {
+@WebServlet("/admin")
+public class AdminServlet extends HttpServlet {
     UserService service = UserService.getInstance();
 
     @Override
@@ -21,7 +21,7 @@ public class UserServlet extends HttpServlet {
         if (action == null) {
             List<User> users = service.getAllUsers();
             req.setAttribute("users", users);
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/users.jsp").forward(req, resp);
         } else if (action.equals("update")) {
             User user = service.getUserById(Long.parseLong(req.getParameter("id")));
             req.setAttribute("user", user);
@@ -33,9 +33,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
-        String idStr = req.getParameter("id");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String ageStr = req.getParameter("age");
@@ -58,14 +56,13 @@ public class UserServlet extends HttpServlet {
                 break;
         }
 
-        resp.sendRedirect("/");
+        resp.sendRedirect("/admin");
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
         String idStr = req.getParameter("id");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
@@ -85,7 +82,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
         String idStr = req.getParameter("id");
         long id = 0L;
         if (idStr != null) {

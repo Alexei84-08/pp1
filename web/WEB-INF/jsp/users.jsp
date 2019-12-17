@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -24,14 +23,14 @@
             <td>${user.surname}</td>
             <td>${user.age}</td>
             <td>
-                <form action="/" method="GET">
+                <form action="/admin" method="GET">
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" value="Редактировать">
                 </form>
             </td>
             <td>
-                <form action="/" method="POST">
+                <form action="/admin" method="POST">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" value="Удалить">
@@ -41,7 +40,7 @@
     </c:forEach>
 </table>
 <h3>New User</h3>
-<form action="/" method="POST">
+<form action="/admin" method="POST">
     Регистрация:<br>
     Имя: <input type="text" name="name">
     Фамилия: <input type="text" name="surname">
@@ -49,5 +48,7 @@
     <input type="hidden" name="action" value="add">
     <input type="submit" value="Добавить">
 </form>
+<br>
+<a href="/logout">Выйти</a>
 </body>
 </html>
