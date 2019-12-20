@@ -100,8 +100,10 @@ public class UserDaoJDBC implements UserDao {
         pstmt.setString(1, login);
         pstmt.setString(2, password);
         ResultSet resultSet = pstmt.executeQuery();
-        resultSet.next();
-        return resultSet.getString(1).equals(login) && resultSet.getString(2).equals(password);
+        if (resultSet.next()){
+            return resultSet.getString(1).equals(login) && resultSet.getString(2).equals(password);
+        }
+        return false;
     }
 
     public void createTable() throws SQLException {
